@@ -60,6 +60,9 @@ namespace WTJoystickCurves
         }
         private void InitDragPoints()
         {
+            if (_points == null)
+                return;
+
             _dragPanels = new DragRectangle[10];
             for (var i = 0; i < _points.Length; i++)
             {
@@ -139,7 +142,9 @@ namespace WTJoystickCurves
         public Point[] Points
         {
             get { return _points; }
-            set { 
+            set {
+                if (value == null)
+                    return;
                 if( value.Length == 10 )
                 {
                     _points = value;

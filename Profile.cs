@@ -67,6 +67,8 @@ namespace WTJoystickCurves
 
         public void SetLinearitySliders(string section, float[] sliders)
         {
+            if (sliders == null)
+                return;
 
             if (sliders.Length != 10)
                 return;
@@ -84,6 +86,9 @@ namespace WTJoystickCurves
 
         public bool GetSliderCheckState(string section)
         {
+            if (String.IsNullOrEmpty(_content))
+                return false;
+
             var reSliderCheckState = @"^(.*[^a-z_0-9]+"
                         + section
                         + @"\{[^\}]*useSliders:b=)([a-z]+)(.*)$";
@@ -93,6 +98,9 @@ namespace WTJoystickCurves
 
         public void SetSliderCheckState(string section, bool checkedState)
         {
+            if (String.IsNullOrEmpty(_content))
+                return;
+
             var reSliderCheckState = @"^(.*[^a-z_0-9]+"
                         + section
                         + @"\{[^\}]*useSliders:b=)([a-z]+)(.*)$";
@@ -105,6 +113,8 @@ namespace WTJoystickCurves
             var result = false;
             try
             {
+                if (String.IsNullOrEmpty(_content))
+                    return false;
 
                 File.WriteAllText(_path, _content);
                 result = true;
