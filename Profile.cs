@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+
 using System.Text;
 using System.Text.RegularExpressions;
 using System.IO;
@@ -33,6 +33,8 @@ namespace WTJoystickCurves
             try
             {
                 _content = File.ReadAllText(_path, Encoding.UTF8);
+                if (String.IsNullOrEmpty(_content))
+                    return;
             }
             catch {
                 return;
@@ -50,7 +52,14 @@ namespace WTJoystickCurves
         }
         public float[] GetLinearitySliders( string section )
         {
+            if (String.IsNullOrEmpty(_content))
+                return new float[10];
+
             var sectionText = Re.GetSubString( _content, "(" + section + reSection + ")",1 );
+
+            if (String.IsNullOrEmpty(sectionText))
+                return new float[10];
+
             Debug.Print(sectionText);
 
             float[] sliders = new float[10];

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
+
 using System.Text;
 using System.Windows.Forms;
 
@@ -26,6 +26,10 @@ namespace WTJoystickCurves
                 checkPitch.Checked = wtProfile.GetSliderCheckState("elevator");
                 checkRoll.Checked = wtProfile.GetSliderCheckState("ailerons");
                 checkYaw.Checked = wtProfile.GetSliderCheckState("rudder");
+            }
+            else
+            {
+                MessageBox.Show(String.Format("Can't read from file: {0}", profilePath));
             }
         }
 
@@ -62,7 +66,11 @@ namespace WTJoystickCurves
         {
             curveYaw.YPoints = new float[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
         }
-
+        public static void ThreadException(object sender, System.Threading.ThreadExceptionEventArgs e)
+        {
+            var errorMsg = e.Exception.Message + "\n\nStack Trace:\n" + e.Exception.StackTrace;
+            MessageBox.Show(errorMsg);
+        }
 
     }
 }
